@@ -59,6 +59,11 @@ contract lastmile{
 
     }
 
+    function getPassenger (address _address) view public returns (bytes32, bytes32, uint, bytes32, uint, bytes32, bytes32) {
+        return (passengers[_address].fname, passengers[_address].lname, passengers[_address].age, passengers[_address].gender, passengers[_address].checked_bags,
+                    passengers[_address].special_preferences, passengers[_address].class);
+    }
+    
     function setFlight (address _address, bytes32 _airline, bytes32 _flight_number, uint _departure_time,
                         uint _arrival_time, bytes32 _departure_airport, bytes32 _arrival_airport, bytes32 _status,
                         Flight_check _flight_check) view public {
@@ -74,9 +79,10 @@ contract lastmile{
         flight.flight_check = _flight_check;
     }
 
-
-
-
+    function getFlight (address _address) view public returns (bytes32, bytes32, uint, uint, bytes32, bytes32, bytes32, Flight_check) {
+        return (flights[_address].airline, flights[_address].flight_number, flights[_address].departure_time, flights[_address].arrival_time, 
+                    flights[_address].departure_airport, flights[_address].arrival_airport, flights[_address].status, flights[_address].flight_check);
+    }
 
 
 }
