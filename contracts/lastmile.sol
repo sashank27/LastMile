@@ -1,3 +1,4 @@
+pragma solidity ^0.5.0;
 
 contract lastmile{
 
@@ -40,6 +41,9 @@ contract lastmile{
     mapping (address => Passenger) passengers;
     address[] public PassengersAccts;
 
+    mapping (address => Flight) flights;
+    address[] public FlightAccts;
+
 
     function setPassenger (address _address, bytes32 _fname, bytes32 _lname, uint _age, bytes32 _gender,
                             uint _checked_bags, bytes32 _special_preferences, bytes32 _class) view public {
@@ -54,5 +58,25 @@ contract lastmile{
         passenger.class = _class;
 
     }
+
+    function setFlight (address _address, bytes32 _airline, bytes32 _flight_number, uint _departure_time, 
+                        uint _arrival_time, bytes32 _departure_airport, bytes32 _arrival_airport, bytes32 _status, 
+                        Flight_check _flight_check) view public {
+        var flight = flights[_address];
+
+        flight.airline = _airline;
+        flight.flight_number = _flight_number;
+        flight.departure_airport = _departure_airport;
+        flight.arrival_airport = _arrival_airport;
+        flight.departure_time = _departure_time;
+        flight.arrival_time = _arrival_time;
+        flight.status = _status;
+        flight.Flight_check = flight_check;
+    }
+
+    
+
+
+
 
 }
