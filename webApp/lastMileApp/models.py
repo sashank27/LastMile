@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime    
 
 class Passenger(models.Model):
-    passenger_id      = models.AutoField(primary_key=True, default=1)
+    passenger_id      = models.CharField(max_length=255, null=True)
     fname             = models.CharField(max_length=255, null=True)
     lname             = models.CharField(max_length=255, null=True)
     age               = models.IntegerField()
@@ -19,12 +19,12 @@ class Passenger(models.Model):
         return self.fname + self.lname
 
 class Booking(models.Model):
-    booking_id = models.AutoField(primary_key=True, default=1)
+    booking_id = models.CharField(max_length=255, null=True)
     passenger  = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     flightID   = models.CharField(max_length=200)
 
 class Flight(models.Model):
-    flight_id        = models.AutoField(primary_key=True, default=1)
+    flight_id        = models.CharField(max_length=255, null=True)
     airline          = models.CharField(max_length=200)
     flightNumber     = models.CharField(max_length=200)
     arrival          = models.DateTimeField(default=datetime.now, blank=True)

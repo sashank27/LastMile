@@ -1,0 +1,69 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+        <link rel="shortcut icon" type="image/png" href="http://res.cloudinary.com/discuss/image/upload/v1515422358/favicon_isr0ue.png"/>
+        <script src="https://use.fontawesome.com/19fb39091d.js"></script>
+
+        {% block head_extra %} {% endblock head_extra %}
+
+    </head>
+    <body>
+
+
+    <!-- NAVBAR -->
+
+    {% block nav %}
+
+        <nav class="navbar navbar-default navbar-fixed-top opaque-navbar">
+            <div class="container">
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <span><img src="http://res.cloudinary.com/discuss/image/upload/v1515422348/logo_barf4r.png" height="40px" width="40px"/>
+                    LastMile</span>
+                </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                <li><a href="/my_account/{{user.id}}/">
+                    {% if user.image is None %}
+                            <i class="fa fa-user" aria-hidden="true"></i> {{user.username}}
+                    {% else %}
+                            <span>
+                                <img src="http://res.cloudinary.com/discuss/image/upload/v1503759641/{{user.image}}.png" height="34px" width="auto" style="border-radius:2px; margin-bottom:-10px; margin-top:-15px;"> {{user.username}}
+                            </span>
+                    {% endif %}
+                </a></li>
+                {% if logged_user %}
+                    <li><a href="/logout/">Logout</a></li>
+                {% endif %}
+                </ul>
+
+                </div>
+            </div>
+        </nav>
+
+    {% endblock nav %}
+
+    <!-- END NAVBAR -->
+
+
+
+
+    <!-- CONTENT -->
+
+    {% block content %} {% endblock content %}
+
+    <!-- END CONTENT -->
