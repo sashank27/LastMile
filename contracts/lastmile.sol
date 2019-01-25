@@ -59,8 +59,8 @@ contract lastmile{
 
     }
 
-    function setFlight (address _address, bytes32 _airline, bytes32 _flight_number, uint _departure_time, 
-                        uint _arrival_time, bytes32 _departure_airport, bytes32 _arrival_airport, bytes32 _status, 
+    function setFlight (address _address, bytes32 _airline, bytes32 _flight_number, uint _departure_time,
+                        uint _arrival_time, bytes32 _departure_airport, bytes32 _arrival_airport, bytes32 _status,
                         Flight_check _flight_check) view public {
         var flight = flights[_address];
 
@@ -71,10 +71,10 @@ contract lastmile{
         flight.departure_time = _departure_time;
         flight.arrival_time = _arrival_time;
         flight.status = _status;
-        flight.Flight_check = flight_check;
+        flight.flight_check = _flight_check;
     }
 
-    
+
 
 
 
