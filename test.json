@@ -1,0 +1,40 @@
+{
+	"participants": {
+		"passenger_id": 1,
+		"fname": "Shreyansh",
+		"lname": "Dwivedi",
+		"age": 20,
+		"email": "shreyanshdwivedi1997@gmail.com",
+		"phoneNumber": "7080397532",
+		"gender": "male",
+		"checkedBags": 2,
+		"classType": "economic",
+		"specialPreference": 0
+	},
+
+
+	"flight": {
+		"flight_id": 1,
+		"airline": "Emirates",
+		"flightNumber": "ABC123",
+		"arrival": "2019-10-01 15:26",
+		"departure": "20119-10-01 17:00",
+		"arrivalAirport": "ALD",
+		"departureAirport": "XDX",
+		"status": "pending",
+		"flightCheck": 1
+	},
+
+	"booking": {
+		"booking_id": 1,
+		"passenger": 1,
+		"flightID": 1
+	},
+
+	"flightCheck": {
+		"hydraulicMachine": 1,
+		"wheelsCheck": 1,
+		"landingMech": 1,
+		"navigationSystem": 1
+	}
+}
