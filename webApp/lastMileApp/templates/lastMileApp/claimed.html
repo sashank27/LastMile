@@ -26,13 +26,13 @@
                         </div>
                         <div class="col m3" style="font-size:20px; letter-spacing: 1.5px; margin-top: -10px; font-family: Quicksand;">
                             <b>FLIGHT</b> <br />
-                            AA2203
+                            {{flight.flightNumber}}
                         </div>
                     </div>
 
                     <div class="row" style="margin-top: 35px;">
                         <div class="col m3" style="font-family: Quicksand; font-weight: 700; font-size: 50px; letter-spacing: 3.5px;">
-                            LAX
+                            {{flight.departureAirport}}
                         </div>
                         <div class="col m1"></div>
                         <div class="col m3">
@@ -40,7 +40,7 @@
                         </div>
                         <div class="col m2"></div>
                         <div class="col m3" style="font-family: Quicksand; font-weight: 700; font-size: 50px; letter-spacing: 3.5px; margin-left: -10px">
-                            LAS
+                            {{flight.arrivalAirport}}
                         </div>
                     </div>
 
@@ -51,17 +51,17 @@
                         </div>
                         <div class="col m4" style="margin-left: 20px;">
                             <b>STATUS</b> <br />
-                            <span style="font-family: Oxygen; font-size: 17px;">ON TIME</span>
+                            <span style="font-family: Oxygen; font-size: 17px;">{{flight.status|capfirst}}</span>
                         </div>
                         <div class="col m3" style="margin-left: 6px;">
                             <b>DEPARTS</b> <br />
-                            <span style="font-family: Oxygen; font-size: 17px;">4:30 PM</span>
+                            <span style="font-family: Oxygen; font-size: 17px;">{{flight.departure|date:"h:m"}}</span>
                         </div>
                     </div>
 
                     <div class="row" style="margin-top: 20px; font-size: 25px;">
                         <div class="col m12">
-                            DWIVEDI/SHREYANSH
+                            {{passenger.lname|capfirst}}/{{passenger.fname|capfirst}}
                         </div>
                     </div>
                     <br />
@@ -96,7 +96,7 @@
 
                     <div class="row" style="background-image: url('/static/images/food.svg'); background-size: cover; background-repeat: no-repeat;">
                         <div class="col m12 center" style="margin-top: 10px;">
-                            <span style="font-family: Quicksand; font-weight: 700; font-size: 27px;">DWIVEDI/SHREYANSH</span>
+                            <span style="font-family: Quicksand; font-weight: 700; font-size: 27px;">{{passenger.lname|capfirst}}/{{passenger.fname|capfirst}}</span>
                             <br />
                             <p style=" padding-bottom: 15px;"></p>
                             <span style="font-family: Oxygen; font-weight: 700; font-size: 15px; color:rgb(43, 39, 39); letter-spacing: 1.5px;">Authorized

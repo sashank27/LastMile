@@ -36,7 +36,7 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="Sdf67Ghbsdf786afdsdf">
         <button id="button">Send data</button>
 
-        <form method="post" action="/reschedule_test/" id="reschedule-form" style="display: none;">
+        <form method="post" action="/reschedule/" id="reschedule-form" style="display: none;">
             <div class="form-group">
                 <input type="text" class="form-control frm" id="flightNumber" name="flightNumber" hidden>
             </div>
@@ -55,332 +55,365 @@
         }
         web3.eth.defaultAccount = web3.eth.accounts[0];
         var CoursetroContract = web3.eth.contract([
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "components": [
-                            {
-                                "name": "fname",
-                                "type": "string"
-                            },
-                            {
-                                "name": "lname",
-                                "type": "string"
-                            },
-                            {
-                                "name": "age",
-                                "type": "uint256"
-                            },
-                            {
-                                "name": "reference_id",
-                                "type": "string"
-                            },
-                            {
-                                "name": "flight_no",
-                                "type": "string"
-                            },
-                            {
-                                "name": "gender",
-                                "type": "string"
-                            },
-                            {
-                                "name": "checked_bags",
-                                "type": "uint256"
-                            },
-                            {
-                                "name": "special_preferences",
-                                "type": "string"
-                            },
-                            {
-                                "name": "class",
-                                "type": "string"
-                            }
-                        ],
-                        "indexed": false,
-                        "name": "_passenger",
-                        "type": "tuple"
-                    },
-                    {
-                        "components": [
-                            {
-                                "name": "airline",
-                                "type": "string"
-                            },
-                            {
-                                "name": "flight_number",
-                                "type": "string"
-                            },
-                            {
-                                "name": "flight_date",
-                                "type": "string"
-                            },
-                            {
-                                "name": "departure_time",
-                                "type": "uint256"
-                            },
-                            {
-                                "name": "arrival_time",
-                                "type": "uint256"
-                            },
-                            {
-                                "name": "departure_airport",
-                                "type": "string"
-                            },
-                            {
-                                "name": "arrival_airport",
-                                "type": "string"
-                            },
-                            {
-                                "name": "status",
-                                "type": "string"
-                            },
-                            {
-                                "components": [
-                                    {
-                                        "name": "hydraulics",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "name": "wheels",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "name": "landing_mechanism",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "name": "nav_system",
-                                        "type": "bool"
-                                    }
-                                ],
-                                "name": "flight_check",
-                                "type": "tuple"
-                            }
-                        ],
-                        "indexed": false,
-                        "name": "_flight",
-                        "type": "tuple"
-                    }
-                ],
-                "name": "IssueTicket",
-                "type": "event"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_address",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_airline",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_flight_number",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_flight_date",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_departure_time",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "_arrival_time",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "_departure_airport",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_arrival_airport",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_status",
-                        "type": "string"
-                    },
-                    {
-                        "components": [
-                            {
-                                "name": "hydraulics",
-                                "type": "bool"
-                            },
-                            {
-                                "name": "wheels",
-                                "type": "bool"
-                            },
-                            {
-                                "name": "landing_mechanism",
-                                "type": "bool"
-                            },
-                            {
-                                "name": "nav_system",
-                                "type": "bool"
-                            }
-                        ],
-                        "name": "_flight_check",
-                        "type": "tuple"
-                    }
-                ],
-                "name": "setFlight",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_address",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_fname",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_lname",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_age",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "_reference_id",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_flight_no",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_gender",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_checked_bags",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "_special_preferences",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_class",
-                        "type": "string"
-                    }
-                ],
-                "name": "setPassenger",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "countFlights",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "FlightAccts",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_address",
-                        "type": "address"
-                    }
-                ],
-                "name": "getFlights",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    },
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_address",
-                        "type": "address"
-                    }
-                ],
-                "name": "getPassengers",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "PassengersAccts",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ]);
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "PassengersAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "FlightRefs",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getPassengers",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "FlightAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_fname",
+				"type": "string"
+			},
+			{
+				"name": "_lname",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_reference_id",
+				"type": "string"
+			},
+			{
+				"name": "_flight_no",
+				"type": "string"
+			},
+			{
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"name": "_checked_bags",
+				"type": "uint256"
+			},
+			{
+				"name": "_special_preferences",
+				"type": "string"
+			},
+			{
+				"name": "_class",
+				"type": "string"
+			}
+		],
+		"name": "setPassenger",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_airline",
+				"type": "string"
+			},
+			{
+				"name": "_flight_number",
+				"type": "string"
+			},
+			{
+				"name": "_flight_date",
+				"type": "string"
+			},
+			{
+				"name": "_departure_time",
+				"type": "uint256"
+			},
+			{
+				"name": "_arrival_time",
+				"type": "uint256"
+			},
+			{
+				"name": "_departure_airport",
+				"type": "string"
+			},
+			{
+				"name": "_arrival_airport",
+				"type": "string"
+			},
+			{
+				"name": "_status",
+				"type": "string"
+			},
+			{
+				"components": [
+					{
+						"name": "hydraulics",
+						"type": "bool"
+					},
+					{
+						"name": "wheels",
+						"type": "bool"
+					},
+					{
+						"name": "landing_mechanism",
+						"type": "bool"
+					},
+					{
+						"name": "nav_system",
+						"type": "bool"
+					}
+				],
+				"name": "_flight_check",
+				"type": "tuple"
+			}
+		],
+		"name": "setFlight",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "getFlightRefs",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "fname",
+						"type": "string"
+					},
+					{
+						"name": "lname",
+						"type": "string"
+					},
+					{
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"name": "reference_id",
+						"type": "string"
+					},
+					{
+						"name": "flight_no",
+						"type": "string"
+					},
+					{
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"name": "checked_bags",
+						"type": "uint256"
+					},
+					{
+						"name": "special_preferences",
+						"type": "string"
+					},
+					{
+						"name": "class",
+						"type": "string"
+					}
+				],
+				"indexed": false,
+				"name": "_passenger",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"name": "airline",
+						"type": "string"
+					},
+					{
+						"name": "flight_number",
+						"type": "string"
+					},
+					{
+						"name": "flight_date",
+						"type": "string"
+					},
+					{
+						"name": "departure_time",
+						"type": "uint256"
+					},
+					{
+						"name": "arrival_time",
+						"type": "uint256"
+					},
+					{
+						"name": "departure_airport",
+						"type": "string"
+					},
+					{
+						"name": "arrival_airport",
+						"type": "string"
+					},
+					{
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"name": "hydraulics",
+								"type": "bool"
+							},
+							{
+								"name": "wheels",
+								"type": "bool"
+							},
+							{
+								"name": "landing_mechanism",
+								"type": "bool"
+							},
+							{
+								"name": "nav_system",
+								"type": "bool"
+							}
+						],
+						"name": "flight_check",
+						"type": "tuple"
+					}
+				],
+				"indexed": false,
+				"name": "_flight",
+				"type": "tuple"
+			}
+		],
+		"name": "IssueTicket",
+		"type": "event"
+	}
+]);
         function post(path, params, method) {
-            method = method || "post"; 
+            method = method || "post";
             var form = document.createElement("form");
             form.setAttribute("method", method);
             form.setAttribute("action", path);
@@ -396,19 +429,19 @@
             document.body.appendChild(form);
             form.submit();
         }
-        var Coursetro = CoursetroContract.at("0x6588d0a76682198dd3731812b9bb4e00d073f917");
+        var Coursetro = CoursetroContract.at("0x4d93456cf0321790479df1bb2b455fcdbb6d0857");
         console.log(Coursetro);
 
 
         $("#button").click(function () {
             $("#loader").show();
 
-            data = Coursetro.getFlights("0xf53f9f2b5080f19ccc22e4f3627fb1ed2058b67f", function (error, result) {
+            data = Coursetro.getFlights("0xdb08489a9f95c0c4607bc9050fdfece8e2ec6988", function (error, result) {
                 if (!error) {
                     $("#flightNumber").val(result[0]);
                     $("form#reschedule-form").submit();
 
-                    console.log(result);
+                    console.log(result[0]);
                 }
                 else
                     console.log(error);
