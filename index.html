@@ -7,6 +7,7 @@
     <title>LastMile</title>
 -
     <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -30,14 +31,12 @@
 
 
         <label for="age" class="col-lg-2 control-label">Instructor Age</label>
-        <input id="age" type="text">
+        <input id="age" type="text">-->
 
-        <button id="button">Update Instructor</button> -->
+        <button id="button">Send data</button>
 
 
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
        if (typeof web3 !== 'undefined') {
@@ -50,6 +49,117 @@
         web3.eth.defaultAccount = web3.eth.accounts[0];
 
         var CoursetroContract = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "fname",
+						"type": "string"
+					},
+					{
+						"name": "lname",
+						"type": "string"
+					},
+					{
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"name": "reference_id",
+						"type": "string"
+					},
+					{
+						"name": "flight_no",
+						"type": "string"
+					},
+					{
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"name": "checked_bags",
+						"type": "uint256"
+					},
+					{
+						"name": "special_preferences",
+						"type": "string"
+					},
+					{
+						"name": "class",
+						"type": "string"
+					}
+				],
+				"indexed": false,
+				"name": "_passenger",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"name": "airline",
+						"type": "string"
+					},
+					{
+						"name": "flight_number",
+						"type": "string"
+					},
+					{
+						"name": "flight_date",
+						"type": "string"
+					},
+					{
+						"name": "departure_time",
+						"type": "uint256"
+					},
+					{
+						"name": "arrival_time",
+						"type": "uint256"
+					},
+					{
+						"name": "departure_airport",
+						"type": "string"
+					},
+					{
+						"name": "arrival_airport",
+						"type": "string"
+					},
+					{
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"name": "hydraulics",
+								"type": "bool"
+							},
+							{
+								"name": "wheels",
+								"type": "bool"
+							},
+							{
+								"name": "landing_mechanism",
+								"type": "bool"
+							},
+							{
+								"name": "nav_system",
+								"type": "bool"
+							}
+						],
+						"name": "flight_check",
+						"type": "tuple"
+					}
+				],
+				"indexed": false,
+				"name": "_flight",
+				"type": "tuple"
+			}
+		],
+		"name": "IssueTicket",
+		"type": "event"
+	},
 	{
 		"constant": false,
 		"inputs": [
@@ -138,6 +248,14 @@
 				"type": "uint256"
 			},
 			{
+				"name": "_reference_id",
+				"type": "string"
+			},
+			{
+				"name": "_flight_no",
+				"type": "string"
+			},
+			{
 				"name": "_gender",
 				"type": "string"
 			},
@@ -162,6 +280,20 @@
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "countFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "",
@@ -173,6 +305,48 @@
 			{
 				"name": "",
 				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getPassengers",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -199,8 +373,9 @@
 		"type": "function"
 	}
 ]);
-    var Coursetro = CoursetroContract.at("0xbbf289d846208c16edc8474705c748aff07732db");
+    var Coursetro = CoursetroContract.at("0x692a70d2e424a56d2c6c27aa97d1a86395877b3a");
     console.log(Coursetro);
+
 
     $("#button").click(function() {
        $("#loader").show();
@@ -209,7 +384,7 @@
            type:"POST",
            url: "/reschedule_tickets",
            data:{
-            Coursetro.getPassengers()
+             data: Coursetro.getPassengers("0xca35b7d915458ef540ade6068dfe2f44e8fa733c")
            },
            success: function( data )
            {
@@ -217,7 +392,7 @@
            }
         })
     });
-   });
+
 
     //
     // var instructorEvent = Coursetro.Instructor({}, 'latest'
