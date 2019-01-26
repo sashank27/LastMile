@@ -98,9 +98,11 @@ contract lastmile{
             return FlightAccts.length;
         }
 
-        function countPassengers() view public returns (uint) {
-            return PassengersAccts.length;
-        }
+
+
+
+
+
 
 
 }

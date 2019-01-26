@@ -31,7 +31,7 @@
 
         <label for="age" class="col-lg-2 control-label">Instructor Age</label>
         <input id="age" type="text">
-
+        <input type="hidden" name="csrfmiddlewaretoken" value="Sdf67Ghbsdf786afdsdf">
         <button id="button">Send data</button>
 
 
@@ -370,10 +370,30 @@
 		"type": "function"
 	}
 ]);
-    var Coursetro = CoursetroContract.at("0x692a70d2e424a56d2c6c27aa97d1a86395877b3a");
+function post(path, params, method) {
+  method = method || "post"; // Set method to post by default if not specified.
+  // The rest of this code assumes you are not using a library.
+  // It can be made less wordy if you use one.
+  var form = document.createElement("form");
+  form.setAttribute("method", method);
+  form.setAttribute("action", path);
+  for(var key in params) {
+      if(params.hasOwnProperty(key)) {
+          var hiddenField = document.createElement("input");
+          hiddenField.setAttribute("type", "hidden");
+          hiddenField.setAttribute("name", key);
+          hiddenField.setAttribute("value", params[key]);
+          form.appendChild(hiddenField);
+      }
+  }
+  document.body.appendChild(form);
+  form.submit();
+}
+    var Coursetro = CoursetroContract.at("0x780cff54738df5f64a8cea786d57105992b78e2a");
     console.log(Coursetro);
     $("#button").click(function() {
        $("#loader").show();
+
     //    $.ajax(
     //    {
     //        type:"POST",
@@ -386,30 +406,24 @@
     //          console.log(data)
     //        }
 	//     })
-	function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
-            form.appendChild(hiddenField);
-        }
-    }
-    document.body.appendChild(form);
-    form.submit();
-}
-data = Coursetro.getFlights("0xca35b7d915458ef540ade6068dfe2f44e8fa733c");
-console.log(data)
-post('http://localhost:8000/reschedule_test/', data);
-console.log(data);
-});
+
+    data = Coursetro.getFlights("0x2170ac6d3c35bdf7e404695f1e0573a2e5e7d7eb",function(error, result){
+      if (!error) {
+        // post('http://localhost:8000/reschedule_test/', result);
+        var CSRFtoken = $('input[name=csrfmiddlewaretoken]').val();
+
+        var data = result;
+
+        $.post('reschedule_test/', {
+           item_text: data,
+        });
+        console.log(result);
+          }
+      else
+     console.log(error);
+    });
+
+    });
     //
     // var instructorEvent = Coursetro.Instructor({}, 'latest'
     //

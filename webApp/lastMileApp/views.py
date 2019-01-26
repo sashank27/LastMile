@@ -11,10 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     return render(request, 'lastMileApp/index.html', {})
 
-@csrf_exempt 
+@csrf_exempt
 def reschedule_test(request):
     # return (request.POST.get('data'))
-    return HttpResponse(request.POST.get('data'))
+    return HttpResponse(request.POST['result'][0])
 
 def sendMail(request):
     sg = sendgrid.SendGridAPIClient(apikey='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')
