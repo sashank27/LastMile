@@ -20,8 +20,12 @@ class Passenger(models.Model):
 
 class Booking(models.Model):
     booking_id = models.CharField(max_length=255, null=True)
+    bookingRef = models.CharField(max_length=255, null=True)
     passenger  = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     flightID   = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.bookingRef
 
 class Flight(models.Model):
     flight_id        = models.CharField(max_length=255, null=True)
@@ -34,8 +38,15 @@ class Flight(models.Model):
     status           = models.CharField(max_length=200)
     flightCheck      = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.flightNumber
+
 class FlightCheck(models.Model):
+    flightNumber     = models.CharField(max_length=200, null=True)
     hydraulicMachine = models.BooleanField(default=True)
     wheelsCheck      = models.BooleanField(default=True)
     landingMech      = models.BooleanField(default=True)
     navigationSystem = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.flightNumber

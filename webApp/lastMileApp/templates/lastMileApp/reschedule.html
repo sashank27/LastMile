@@ -1,0 +1,38 @@
+{% extends 'lastMileApp/base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col m3"></div>
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <div class="card-title">
+                  Last Mile
+              </div>
+              <br/>
+              <p>
+                  1. Flight Number - {{flight.flightNumber}} <br/>
+                  2. Arrival Airport - {{flight.arrivalAirport}} <br/>
+                  3. Departure Airport - {{flight.departureAirport}} <br/>
+                  4. Status - {{flight.status}} <br/>
+                  5. Departs - {{flight.departure}} <br/>
+                  6. Passenger - {{passenger.lname}}/{{passenger.fname}}
+              </p>
+            </div>
+            <div class="card-action">
+                <a class="waves-effect waves-light btn">Set Preference</a>
+                <a class="waves-effect waves-light btn">Get Cab Coupons</a>
+                <a class="waves-effect waves-light btn">Get Hotel Coupons</a>
+                <a class="waves-effect waves-light btn">Get Food Coupons</a>
+            </div>
+          </div>
+        </div>
+        <div class="col m3"></div>
+    </div>
+
+{% endblock %}
