@@ -22,8 +22,7 @@
         <hr>
 
         <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
-
-        <!-- <label for="fName" class="col-lg-2 control-label">First Name</label>
+        <label for="fName" class="col-lg-2 control-label">First Name</label>
         <input id="fName" type="text">
 
         <label for="lName" class="col-lg-2 control-label">Last Name</label>
@@ -31,7 +30,7 @@
 
 
         <label for="age" class="col-lg-2 control-label">Instructor Age</label>
-        <input id="age" type="text">-->
+        <input id="age" type="text">
 
         <button id="button">Send data</button>
 
@@ -379,19 +378,46 @@
 
     $("#button").click(function() {
        $("#loader").show();
-       $.ajax(
-       {
-           type:"POST",
-           url: "/reschedule_tickets",
-           data:{
-             data: Coursetro.getPassengers("0xca35b7d915458ef540ade6068dfe2f44e8fa733c")
-           },
-           success: function( data )
-           {
-             console.log(data)
-           }
-        })
-    });
+    //    $.ajax(
+    //    {
+    //        type:"POST",
+    //        url: "/reschedule",
+    //        data:{
+    //          data: Coursetro.getPassengers("0xca35b7d915458ef540ade6068dfe2f44e8fa733c")
+    //        },
+    //        success: function( data )
+    //        {
+    //          console.log(data)
+    //        }
+	//     })
+	function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+data = Coursetro.getFlights("0xca35b7d915458ef540ade6068dfe2f44e8fa733c");
+console.log(data)
+post('http://localhost:8000/reschedule_test/', data);
+console.log(data);
+});
 
 
     //

@@ -5,10 +5,16 @@ from django.core.mail import EmailMessage
 import sendgrid
 import os
 from sendgrid.helpers.mail import *
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
     return render(request, 'lastMileApp/index.html', {})
+
+@csrf_exempt 
+def reschedule_test(request):
+    # return (request.POST.get('data'))
+    return HttpResponse(request.POST.get('data'))
 
 def sendMail(request):
     sg = sendgrid.SendGridAPIClient(apikey='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')
