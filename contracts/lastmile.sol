@@ -49,7 +49,7 @@ contract lastmile{
     mapping (address => Flight) flights;
     address[] public FlightAccts;
 
-
+    string[] public FlightRefs;
     function setPassenger (address _address, string _fname, string _lname, uint _age, string _reference_id, string _flight_no, string _gender,
                             uint _checked_bags, string _special_preferences, string _class)  public {
         var passenger = passengers[_address];
@@ -64,8 +64,12 @@ contract lastmile{
         passenger.special_preferences = _special_preferences;
         passenger.class = _class;
         PassengersAccts.push(_address) -1;
+        FlightRefs.push(_reference_id);
 
     }
+        function getFlightRefs()  public returns(string[]) {
+            return (FlightRefs);
+        }
 
     function setFlight (address _address, string _airline, string _flight_number,string _flight_date, uint _departure_time,
                         uint _arrival_time, string _departure_airport, string _arrival_airport, string _status,
