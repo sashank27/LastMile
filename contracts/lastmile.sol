@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+
 pragma experimental ABIEncoderV2;
 contract lastmile{
 
@@ -40,8 +40,8 @@ contract lastmile{
         bool landing_mechanism;
         bool nav_system;
     }
-    
-    
+
+
     event IssueTicket(Passenger _passenger, Flight _flight);
     mapping (address => Passenger) passengers;
     address[] public PassengersAccts;
@@ -67,8 +67,8 @@ contract lastmile{
 
     }
 
-    function setFlight (address _address, string _airline, string _flight_number,string _flight_date, uint _departure_time, 
-                        uint _arrival_time, string _departure_airport, string _arrival_airport, string _status, 
+    function setFlight (address _address, string _airline, string _flight_number,string _flight_date, uint _departure_time,
+                        uint _arrival_time, string _departure_airport, string _arrival_airport, string _status,
                         Flight_check _flight_check)  public {
         var flight = flights[_address];
 
@@ -83,22 +83,24 @@ contract lastmile{
         flight.flight_check = _flight_check;
         FlightAccts.push(_address) -1;
     }
-    
+
         function getPassengers(address _address) view public  returns (string) {
             return (passengers[_address].reference_id);
-    
+
         }
-        
+
         function getFlights(address _address) view public  returns (string,string) {
             return (flights[_address].flight_number, flights[_address].flight_date);
-    
+
         }
-        
+
         function countFlights() view public returns (uint){
             return FlightAccts.length;
         }
-        
+
         function countPassengers() view public returns (uint) {
             return PassengersAccts.length;
         }
+
+
 }

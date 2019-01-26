@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LastMile</title>
+-
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1></h1>
+
+        <span id="countIns"></span>
+
+        <h2 id="instructor"></h2>
+        <span id="insTrans"></span>
+        <hr>
+
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <!-- <label for="fName" class="col-lg-2 control-label">First Name</label>
+        <input id="fName" type="text">
+
+        <label for="lName" class="col-lg-2 control-label">Last Name</label>
+        <input id="lName" type="text">
+
+
+        <label for="age" class="col-lg-2 control-label">Instructor Age</label>
+        <input id="age" type="text">
+
+        <button id="button">Update Instructor</button> -->
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       if (typeof web3 !== 'undefined') {
+         web3 = new Web3(web3.currentProvider);
+       }
+       else {
+         web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       }
+
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_airline",
+				"type": "string"
+			},
+			{
+				"name": "_flight_number",
+				"type": "string"
+			},
+			{
+				"name": "_flight_date",
+				"type": "string"
+			},
+			{
+				"name": "_departure_time",
+				"type": "uint256"
+			},
+			{
+				"name": "_arrival_time",
+				"type": "uint256"
+			},
+			{
+				"name": "_departure_airport",
+				"type": "string"
+			},
+			{
+				"name": "_arrival_airport",
+				"type": "string"
+			},
+			{
+				"name": "_status",
+				"type": "string"
+			},
+			{
+				"components": [
+					{
+						"name": "hydraulics",
+						"type": "bool"
+					},
+					{
+						"name": "wheels",
+						"type": "bool"
+					},
+					{
+						"name": "landing_mechanism",
+						"type": "bool"
+					},
+					{
+						"name": "nav_system",
+						"type": "bool"
+					}
+				],
+				"name": "_flight_check",
+				"type": "tuple"
+			}
+		],
+		"name": "setFlight",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_fname",
+				"type": "string"
+			},
+			{
+				"name": "_lname",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"name": "_checked_bags",
+				"type": "uint256"
+			},
+			{
+				"name": "_special_preferences",
+				"type": "string"
+			},
+			{
+				"name": "_class",
+				"type": "string"
+			}
+		],
+		"name": "setPassenger",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "FlightAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "PassengersAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+    var Coursetro = CoursetroContract.at("0xbbf289d846208c16edc8474705c748aff07732db");
+    console.log(Coursetro);
+
+    $("#button").click(function() {
+       $("#loader").show();
+       $.ajax(
+       {
+           type:"POST",
+           url: "/reschedule_tickets",
+           data:{
+            Coursetro.getPassengers()
+           },
+           success: function( data )
+           {
+             console.log(data)
+           }
+        })
+    });
+   });
+
+    //
+    // var instructorEvent = Coursetro.Instructor({}, 'latest'
+    //
+    // Coursetro.countInstructors((err,res) =>{
+    //   if(res){
+    //     $("#countIns").html(res.c+ 'Instructors')
+    //   }
+    // })
+    // instructorEvent.watch(function(error, result){
+    //   if(!error) {
+    //     if(result.blockHash != $("#insTrans").html()) {
+    //         $("#loader").hide();
+    //     }
+    //     $("#insTrans").html('Block Hash: '+ result.blockHash)
+    //
+    //     $("#instructor").html(web3.toAscii(result.args.fname)+' '+web3.toAscii(result.args.lname) + ' ('+results.args.age +' years old)');
+    //   }
+    //   else {
+    //     $("#loader").hide();
+    //     console.log(error);
+    //   }
+    // });
+
+    // $("#button").click(function() {
+    //     Coursetro.setInstructor(web3.eth.defaultAccount, $("#age").val(), $("#name").val(), $("#age").val(),(err,res)=>{
+    //       if(err){
+    //         $("#loader").hide();
+    //         console.log("oh no");
+    //       }
+    //     });
+    //     $("#loader").show();
+    // });
+
+
+
+    </script>
+
+</body>
+</html>
