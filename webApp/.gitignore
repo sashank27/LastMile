@@ -1,0 +1,3 @@
+venv/*
+sendgrid.env
+*.pyc
