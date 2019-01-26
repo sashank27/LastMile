@@ -6,6 +6,7 @@ import sendgrid
 import os
 from sendgrid.helpers.mail import *
 from django.views.decorators.csrf import csrf_exempt
+import string, random
 
 # Create your views here.
 def index(request):
@@ -59,16 +60,59 @@ def sendMail(request):
     response = sg.client.mail.send.post(request_body=data)
     return HttpResponse('Done')
 
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+
 def reschedule(request, bookingRef):
     passenger = get_object_or_404(Passenger, bookingRef=bookingRef)
     booking   = get_object_or_404(Booking, bookingRef=bookingRef)
-    flight    = get_object_or_404(Flight, flight_id=booking.flightID)
+    flight    = get_object_or_404(Flight, id=booking.flightID)
+    print(flight)
+
+    sortedFlights     = Flight.objects.order_by('departure')
+    specialPassengers = Passenger.objects.filter(specialPreference=True)
+    normalPassengers  = Passenger.objects.filter(specialPreference=False)
+
+    print(specialPassengers)
+    print(normalPassengers)
+
+    if flight.status == 'Cancelled':
+        for sp in specialPassengers:
+            for sf in sortedFlights:
+                print(sf.flightNumber + ' ' + str(sf.departure) + ' ' + sf.status + ' ' + str(sf.id))
+                if (sf.status == 'OnTime') and (sf.departure > flight.departure and sf.emptySeats>0):
+                    print(str(sf.id) + ' your flight is cancelled')
+                    newBooking = Booking.objects.create(bookingRef=id_generator(), passenger=passenger, flightID=sf.id)
+                    passenger.bookingRef = newBooking.bookingRef
+                    passenger.save()
+                    sf.emptySeats -= 1
+                    sf.save()
+                    return HttpResponseRedirect('/reschedule/'+passenger.bookingRef)
+        
+        for np in normalPassengers:
+            for sf in sortedFlights:
+                print(sf.flightNumber + ' ' + str(sf.departure) + ' ' + sf.status + ' ' + str(sf.id))
+                if (sf.status == 'OnTime') and (sf.departure > flight.departure):
+                    print(str(sf.id) + ' your flight is cancelled')
+                    newBooking = Booking.objects.create(bookingRef=id_generator(), passenger=passenger, flightID=sf.id)
+                    passenger.bookingRef = newBooking.bookingRef
+                    passenger.save()
+                    sf.emptySeats -= 1
+                    sf.save()
+                    return HttpResponseRedirect('/reschedule/'+passenger.bookingRef)
+    else:
+        return HttpResponse('Your flight is on time :)')
+
     context = {
         'passenger': passenger,
         'booking'  : booking,
         'flight'   : flight,
     }
     return render(request, 'lastMileApp/reschedule.html', context)
+
+
 
 def preference(request, bookingRef):
     passenger = get_object_or_404(Passenger, bookingRef=bookingRef)
