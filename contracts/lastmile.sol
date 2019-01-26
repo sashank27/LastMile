@@ -1,15 +1,17 @@
-pragma solidity ^0.5.0;
-
+pragma solidity ^0.4.24;
+pragma experimental ABIEncoderV2;
 contract lastmile{
 
     struct Passenger{
-        bytes32 fname;
-        bytes32 lname;
+        string fname;
+        string lname;
         uint age;
-        bytes32 gender;
+        string reference_id;
+        string flight_no;
+        string gender;
         uint checked_bags;
-        bytes32 special_preferences;
-        bytes32 class;
+        string special_preferences;
+        string class;
 
     }
 
@@ -20,13 +22,14 @@ contract lastmile{
     }
 
     struct Flight{
-        bytes32 airline;
-        bytes32 flight_number;
+        string airline;
+        string flight_number;
+        string flight_date;
         uint departure_time;
         uint arrival_time;
-        bytes32 departure_airport;
-        bytes32 arrival_airport;
-        bytes32 status;
+        string departure_airport;
+        string arrival_airport;
+        string status;
         Flight_check flight_check;
 
     }
@@ -37,7 +40,9 @@ contract lastmile{
         bool landing_mechanism;
         bool nav_system;
     }
-
+    
+    
+    event IssueTicket(Passenger _passenger, Flight _flight);
     mapping (address => Passenger) passengers;
     address[] public PassengersAccts;
 
@@ -45,44 +50,55 @@ contract lastmile{
     address[] public FlightAccts;
 
 
-    function setPassenger (address _address, bytes32 _fname, bytes32 _lname, uint _age, bytes32 _gender,
-                            uint _checked_bags, bytes32 _special_preferences, bytes32 _class) view public {
+    function setPassenger (address _address, string _fname, string _lname, uint _age, string _reference_id, string _flight_no, string _gender,
+                            uint _checked_bags, string _special_preferences, string _class)  public {
         var passenger = passengers[_address];
 
         passenger.fname = _fname;
         passenger.lname = _lname;
         passenger.age = _age;
+        passenger.reference_id = _reference_id;
+        passenger.flight_no = _flight_no;
         passenger.gender = _gender;
         passenger.checked_bags = _checked_bags;
         passenger.special_preferences = _special_preferences;
         passenger.class = _class;
+        PassengersAccts.push(_address) -1;
 
     }
 
-    function getPassenger (address _address) view public returns (bytes32, bytes32, uint, bytes32, uint, bytes32, bytes32) {
-        return (passengers[_address].fname, passengers[_address].lname, passengers[_address].age, passengers[_address].gender, passengers[_address].checked_bags,
-                    passengers[_address].special_preferences, passengers[_address].class);
-    }
-    
-    function setFlight (address _address, bytes32 _airline, bytes32 _flight_number, uint _departure_time,
-                        uint _arrival_time, bytes32 _departure_airport, bytes32 _arrival_airport, bytes32 _status,
-                        Flight_check _flight_check) view public {
+    function setFlight (address _address, string _airline, string _flight_number,string _flight_date, uint _departure_time, 
+                        uint _arrival_time, string _departure_airport, string _arrival_airport, string _status, 
+                        Flight_check _flight_check)  public {
         var flight = flights[_address];
 
         flight.airline = _airline;
         flight.flight_number = _flight_number;
+        flight.flight_date = _flight_date;
         flight.departure_airport = _departure_airport;
         flight.arrival_airport = _arrival_airport;
         flight.departure_time = _departure_time;
         flight.arrival_time = _arrival_time;
         flight.status = _status;
         flight.flight_check = _flight_check;
+        FlightAccts.push(_address) -1;
     }
-
-    function getFlight (address _address) view public returns (bytes32, bytes32, uint, uint, bytes32, bytes32, bytes32, Flight_check) {
-        return (flights[_address].airline, flights[_address].flight_number, flights[_address].departure_time, flights[_address].arrival_time, 
-                    flights[_address].departure_airport, flights[_address].arrival_airport, flights[_address].status, flights[_address].flight_check);
-    }
-
-
+    
+        function getPassengers(address _address) view public  returns (string) {
+            return (passengers[_address].reference_id);
+    
+        }
+        
+        function getFlights(address _address) view public  returns (string,string) {
+            return (flights[_address].flight_number, flights[_address].flight_date);
+    
+        }
+        
+        function countFlights() view public returns (uint){
+            return FlightAccts.length;
+        }
+        
+        function countPassengers() view public returns (uint) {
+            return PassengersAccts.length;
+        }
 }
