@@ -37,7 +37,7 @@ class Flight(models.Model):
     emptySeats         = models.IntegerField(default=0, null=True)
 
     def __str__(self):
-        return self.flightNumber
+        return str(self.id)
 
 class FlightCheck(models.Model):
     flightNumber     = models.CharField(max_length=200, null=True)
