@@ -23,7 +23,7 @@ def reschedule_test(request):
 
 
 def sendMail(passenger):
-    sg = sendgrid.SendGridAPIClient(apikey='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')
+    sg = sendgrid.SendGridAPIClient(apikey='')
 
     from_email = Email("iwm2016501@iiita.ac.in")
     to_email = Email(passenger.email)
