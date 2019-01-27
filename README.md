@@ -1,4 +1,5 @@
-# LASTMILE
+![Logo](https://github.com/sashank27/LastMile/blob/master/logo.png?raw=true)
+
 Public gatherings, as massive as Kumbh Mela, might receive a lot of cancellations and delays of flights. Therefore, we aim to automate the process of the compensation provided to the passengers when flights are delayed/canceled, by levaraging the power of smart contracts.
 
 ## Contributors
