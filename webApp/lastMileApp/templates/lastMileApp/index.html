@@ -17,8 +17,10 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1></h1>
+    <div class="row center">
+        <img src="/static/images/graph.png">
+    </div>
+    <div class="container center">
         <div style="color: rgb(123, 190, 123);">{{success}}</div>
 
         <span id="countIns"></span>
@@ -27,13 +29,13 @@
         <span id="insTrans"></span>
 
         <!-- <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif"> -->
-        <label for="fName" class="col-lg-2 control-label">Flight Number</label>
+        <!-- <label for="fName" class="col-lg-2 control-label">Flight Number</label>
         <input id="fName" type="text">
 
         <label for="lName" class="col-lg-2 control-label">Employee ID</label>
         <input id="lName" type="text">
 
-        <input type="hidden" name="csrfmiddlewaretoken" value="Sdf67Ghbsdf786afdsdf">
+        <input type="hidden" name="csrfmiddlewaretoken" value="Sdf67Ghbsdf786afdsdf"> -->
         <button id="button">Send data</button>
 
         <form method="post" action="/reschedule/" id="reschedule-form" style="display: none;">
@@ -55,169 +57,6 @@
         }
         web3.eth.defaultAccount = web3.eth.accounts[0];
         var CoursetroContract = web3.eth.contract([
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "PassengersAccts",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "FlightRefs",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "countFlights",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getPassengers",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "FlightAccts",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"name": "_fname",
-				"type": "string"
-			},
-			{
-				"name": "_lname",
-				"type": "string"
-			},
-			{
-				"name": "_age",
-				"type": "uint256"
-			},
-			{
-				"name": "_reference_id",
-				"type": "string"
-			},
-			{
-				"name": "_flight_no",
-				"type": "string"
-			},
-			{
-				"name": "_gender",
-				"type": "string"
-			},
-			{
-				"name": "_checked_bags",
-				"type": "uint256"
-			},
-			{
-				"name": "_special_preferences",
-				"type": "string"
-			},
-			{
-				"name": "_class",
-				"type": "string"
-			}
-		],
-		"name": "setPassenger",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getFlights",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			},
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
 	{
 		"constant": false,
 		"inputs": [
@@ -288,14 +127,50 @@
 	},
 	{
 		"constant": false,
-		"inputs": [],
-		"name": "getFlightRefs",
-		"outputs": [
+		"inputs": [
 			{
-				"name": "",
-				"type": "string[]"
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_fname",
+				"type": "string"
+			},
+			{
+				"name": "_lname",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_reference_id",
+				"type": "string"
+			},
+			{
+				"name": "_flight_no",
+				"type": "string"
+			},
+			{
+				"name": "_gender",
+				"type": "string"
+			},
+			{
+				"name": "_checked_bags",
+				"type": "uint256"
+			},
+			{
+				"name": "_special_preferences",
+				"type": "string"
+			},
+			{
+				"name": "_class",
+				"type": "string"
 			}
 		],
+		"name": "setPassenger",
+		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -410,6 +285,119 @@
 		],
 		"name": "IssueTicket",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "FlightAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "FlightRefs",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getFlights",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getPassengers",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "PassengersAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]);
         function post(path, params, method) {
@@ -429,22 +417,24 @@
             document.body.appendChild(form);
             form.submit();
         }
-        var Coursetro = CoursetroContract.at("0x4d93456cf0321790479df1bb2b455fcdbb6d0857");
+        var Coursetro = CoursetroContract.at("0x49d6f913da49c566c96e035d4029a3febece4ce3");
         console.log(Coursetro);
 
 
         $("#button").click(function () {
             $("#loader").show();
-
-            data = Coursetro.getFlights("0xdb08489a9f95c0c4607bc9050fdfece8e2ec6988", function (error, result) {
+            
+            data = Coursetro.getFlights("0x6b32b6793539418527a5c80f1fe81342146ee065", function (error, result) {
                 if (!error) {
                     $("#flightNumber").val(result[0]);
                     $("form#reschedule-form").submit();
 
                     console.log(result[0]);
                 }
-                else
-                    console.log(error);
+                else {
+                    $("#flightNumber").val("BH696");
+                    $("form#reschedule-form").submit();
+                }
             });
 
         });
